@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>🎌 Hiragana Trainer</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <title> Quiz App | Learn Japanese</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -13,19 +13,19 @@
   <div class="animated-bg"></div>
   
   <div class="layout">
-    <!-- LEFT PANEL - GAME -->
-    <div class="game-panel glass-effect">
+    <!-- LEFT: Game Area -->
+    <div class="game-panel glass">
       <div class="top-bar">
         <div class="logo">
-          <span class="logo-icon">🎌</span>
+          <span class="logo-icon">あ</span>
           <h2>Hiragana Quiz</h2>
         </div>
       </div>
 
-      <!-- Progress -->
+      <!-- Progress Bar -->
       <div class="progress-section">
         <div class="progress-header">
-          <span>Progress</span>
+          <span>📖 Journey</span>
           <span id="progressText">0%</span>
         </div>
         <div class="progress-container">
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <!-- Stats -->
+      <!-- Stats Cards -->
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-icon">🏆</div>
@@ -45,12 +45,12 @@
         <div class="stat-card">
           <div class="stat-icon">⏱️</div>
           <div class="stat-info">
-            <span class="stat-label">Time</span>
+            <span class="stat-label">Time Left</span>
             <span class="stat-value" id="time">0</span>
           </div>
         </div>
         <div class="stat-card">
-          <div class="stat-icon">📊</div>
+          <div class="stat-icon">🎯</div>
           <div class="stat-info">
             <span class="stat-label">Accuracy</span>
             <span class="stat-value" id="accuracyDisplay">0%</span>
@@ -58,90 +58,82 @@
         </div>
       </div>
 
-      <!-- Quiz Card -->
+      <!-- Main Quiz Card -->
       <div class="quiz-card">
         <div class="hiragana-wrapper">
           <div class="hiragana-glow"></div>
-          <h1 id="hiragana">--</h1>
+          <h1 id="hiragana">✨</h1>
         </div>
 
-        <div class="input-wrapper">
-          <input id="answer" type="text" placeholder="Type romaji here..." autocomplete="off"/>
-          <div class="input-highlight"></div>
+        <div class="input-group">
+          <input type="text" id="answer" placeholder="Type romaji here... (ex: ka, shi, tsu)" autocomplete="off" />
+          <div class="input-focus-line"></div>
         </div>
 
-        <div id="feedback" class="feedback-message"></div>
+        <div id="feedback" class="feedback"></div>
 
-        <div class="action-buttons">
-          <button id="checkBtn" class="btn-primary">✓ Check</button>
-          <button id="nextBtn" class="btn-secondary" disabled>→ Next</button>
+        <div class="button-group">
+          <button id="checkBtn" class="btn check">✓ Check</button>
+          <button id="nextBtn" class="btn next" disabled>→ Next</button>
         </div>
-        <div class="enter-hint">💡 Press <kbd>Enter</kbd> to check answer</div>
+        <div class="hint">💡 Press <kbd>Enter</kbd> → Check answer</div>
       </div>
 
-      <!-- Result Modal -->
-      <div class="result hidden" id="resultBox">
-        <div class="result-card">
-          <div class="celebration-icon">🎉</div>
+      <!-- Completion Modal -->
+      <div id="resultModal" class="modal hidden">
+        <div class="modal-content">
+          <div class="modal-emoji">🎉🏆🎊</div>
           <h2>Quiz Complete!</h2>
-          <div class="result-stats">
-            <div class="result-stat"><span>Final Score</span><strong id="finalScore"></strong></div>
-            <div class="result-stat"><span>Accuracy</span><strong id="accuracy"></strong></div>
+          <p style="margin: 8px 0 16px; color: #666;">Great effort, learner!</p>
+          <div class="modal-stats">
+            <div class="modal-stat"><span>Final Score</span><strong id="finalScore">0</strong></div>
+            <div class="modal-stat"><span>Accuracy</span><strong id="finalAccuracy">0%</strong></div>
           </div>
-          <button onclick="location.reload()" class="btn-primary">Play Again 🔄</button>
+          <button id="playAgainBtn" class="btn restart">🔄 Play Again</button>
         </div>
       </div>
     </div>
 
-    <!-- RIGHT PANEL - SETTINGS -->
-    <div class="dashboard glass-effect">
+    <!-- RIGHT: Settings & Stats -->
+    <div class="dashboard glass">
       <div class="settings-card">
         <div class="card-header">
           <h3>⚙️ Quiz Settings</h3>
-          <button id="themeToggle" class="icon-btn">🌙</button>
+          <button id="darkModeToggle" class="icon-btn" aria-label="Dark mode">🌙</button>
         </div>
-        
-        <div class="setting-group">
-          <label>📚 Questions</label>
-          <select id="questionCount" class="modern-select">
-            <option value="5">5 Questions</option>
-            <option value="10" selected>10 Questions</option>
-            <option value="20">20 Questions</option>
-            <option value="46">46 Questions (Full Set)</option>
+
+        <div class="setting">
+          <label>📚 Number of questions</label>
+          <select id="questionCount" class="modern-input">
+            <option value="5">5 questions</option>
+            <option value="10" selected>10 questions</option>
+            <option value="20">20 questions</option>
+            <option value="46">46 (Full Hiragana)</option>
           </select>
         </div>
 
-        <div class="setting-group">
-          <label>⏰ Time Limit (seconds)</label>
-          <input type="number" id="timeLimit" value="60" class="modern-input"/>
+        <div class="setting">
+          <label>⏲️ Time limit (seconds)</label>
+          <input type="number" id="timeLimit" value="45" class="modern-input" min="15" max="180" />
         </div>
 
-        <div class="setting-group">
-          <label>🎯 Difficulty</label>
-          <select id="difficulty" class="modern-select">
-            <option value="easy">Easy (More Time)</option>
+        <div class="setting">
+          <label>⚡ Difficulty</label>
+          <select id="difficulty" class="modern-input">
+            <option value="easy">Easy (+30 sec)</option>
             <option value="medium" selected>Medium</option>
-            <option value="hard">Hard (Less Time)</option>
+            <option value="hard">Hard (-15 sec)</option>
           </select>
         </div>
 
-        <div class="setting-group">
-          <label>🎨 Theme Color</label>
-          <div class="theme-buttons">
-            <button class="theme-btn" data-theme="purple">💜</button>
-            <button class="theme-btn" data-theme="blue">💙</button>
-            <button class="theme-btn" data-theme="green">💚</button>
-            <button class="theme-btn" data-theme="orange">🧡</button>
-            <button class="theme-btn" data-theme="pink">💗</button>
-          </div>
-        </div>
-
-        <button id="startBtn" class="btn-start">🚀 Start Quiz</button>
+        <button id="startQuizBtn" class="btn-start">🚀 Start Quiz</button>
+        <p class="info-text">✨ Choose settings above, then click Start</p>
       </div>
 
-      <div class="performance-card">
-        <h3>📈 Recent Performance</h3>
-        <canvas id="performanceChart" width="300" height="150"></canvas>
+      <div class="mini-stats">
+        <h3>📈 Your Progress</h3>
+        <canvas id="miniChart" width="280" height="120" style="width:100%; height:auto; background:rgba(255,255,255,0.3); border-radius:18px;"></canvas>
+        <div class="streak-badge" id="streakBadge">⭐ Streak: 0</div>
       </div>
     </div>
   </div>
