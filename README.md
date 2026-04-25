@@ -4,7 +4,7 @@ A simple, interactive web app to learn and practice Japanese Hiragana characters
 
 ## Live Demo
 
-[View Live Demo →](YOUR_LIVE_LINK_HERE)
+[View Live Demo →](https://hiragana-quiz-app-seven.vercel.app)
 
 ## Features
 
